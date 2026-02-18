@@ -1,36 +1,107 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Web Game - Phaser 3 + Next.js
 
-## Getting Started
+เว็บเกมแนว turn-based ที่รองรับมือถือและ PWA
 
-First, run the development server:
+## คุณสมบัติ
+
+- ✅ Phaser 3 สำหรับ game engine
+- ✅ Next.js 16 + React 19
+- ✅ TypeScript
+- ✅ Tailwind CSS v4
+- ✅ Progressive Web App (PWA)
+- ✅ รองรับมือถือ (iOS, Android)
+- ✅ รองรับ iPad และ tablet
+- ✅ โหมดแนวนอนเท่านั้น (Landscape only)
+- ✅ Responsive scaling
+- ✅ Safe area support (notch, iPhone, iPad)
+- ✅ Touch และ multi-touch support
+- ✅ Fullscreen mode
+- ✅ Howler.js สำหรับเสียง
+
+## การติดตั้ง
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## การรัน
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Development mode:
+```bash
+npm run dev
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Production build:
+```bash
+npm run build
+npm start
+```
 
-## Learn More
+## โครงสร้างโปรเจค
 
-To learn more about Next.js, take a look at the following resources:
+```
+web-game/
+├── app/
+│   ├── layout.tsx          # Layout หลัก + PWA metadata
+│   ├── page.tsx            # หน้าหลัก
+│   └── globals.css         # Global styles + safe areas
+├── components/
+│   ├── PhaserGame.tsx      # Phaser game component
+│   └── OrientationOverlay.tsx  # Overlay สำหรับบังคับโหมดแนวนอน
+├── public/
+│   ├── manifest.json       # PWA manifest
+│   ├── icon-192.png        # PWA icon 192x192
+│   └── icon-512.png        # PWA icon 512x512
+└── next.config.ts          # Next.js + PWA config
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## การปรับแต่งเกม
 
-## Deploy on Vercel
+แก้ไขไฟล์ `components/PhaserGame.tsx`:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- เพิ่ม scenes ใหม่
+- โหลด assets
+- เพิ่ม game logic
+- ปรับแต่ง physics
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Phaser Configuration
+
+เกมถูก config ให้:
+- ขนาด: 1280x720 (16:9 aspect ratio)
+- Scale mode: FIT (รักษา aspect ratio)
+- Auto center: CENTER_BOTH
+- รองรับ touch และ mouse input
+- Resize อัตโนมัติเมื่อหมุนหน้าจอ
+
+## PWA Features
+
+- ติดตั้งเป็นแอปบนมือถือได้
+- Fullscreen mode (ไม่มี browser UI)
+- Offline support (service worker)
+- Landscape orientation only
+
+## Mobile Support
+
+- iPhone (รวม notch models)
+- iPad
+- Android phones
+- Android tablets
+- Safe area insets สำหรับ notch
+- Touch gestures
+- ป้องกัน zoom และ scroll
+
+## การ Deploy
+
+Deploy บน Vercel:
+```bash
+vercel
+```
+
+หรือ platform อื่นๆ ที่รองรับ Next.js
+
+## หมายเหตุ
+
+- เกมจะแสดง overlay เมื่ออยู่ในโหมดแนวตั้ง
+- ใช้ Howler.js สำหรับเสียงในเกม
+- PWA จะ disabled ใน development mode
