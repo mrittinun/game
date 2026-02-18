@@ -4,3 +4,5 @@ export { TextInput } from "./TextInput";
 export { GameButton } from "./GameButton";
 export { GamePanel } from "./GamePanel";
 export { Layout } from "./Layout";
+export { AxieButton } from "./AxieButton";
+export { AxieCard } from "./AxieCard";

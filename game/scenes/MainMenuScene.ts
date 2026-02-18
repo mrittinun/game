@@ -1,12 +1,13 @@
 import Phaser from "phaser";
-import { SceneKey, COLORS, FONT_SIZE } from "@/game/config/constants";
+import { SceneKey } from "@/game/config/constants";
 import { GAME_CONFIG } from "@/game/config/gameConfig";
-import { GameButton, GamePanel, Layout } from "@/game/ui";
+import { AxieButton } from "@/game/ui/AxieButton";
+import { AxieColors, AxieGradients, AxieUI, AxieFonts } from "@/game/config/axieTheme";
 
 export class MainMenuScene extends Phaser.Scene {
-  private mainPanel?: GamePanel;
-  private buttons: GameButton[] = [];
-  private particles?: Phaser.GameObjects.Particles.ParticleEmitter;
+  private buttons: AxieButton[] = [];
+  private clouds: Phaser.GameObjects.Graphics[] = [];
+  private stars: Phaser.GameObjects.Graphics[] = [];
   
   constructor() {
     super({ key: SceneKey.MAIN_MENU });
@@ -18,128 +19,65 @@ export class MainMenuScene extends Phaser.Scene {
     const centerY = height / 2;
     const baseScale = Math.min(width / GAME_CONFIG.WIDTH, height / GAME_CONFIG.HEIGHT);
     
-    // Create layered background
-    this.createBackground(width, height);
+    // Create Axie-style background
+    this.createAxieBackground(width, height);
     
-    // Create main panel
-    this.mainPanel = new GamePanel(this, centerX, centerY, {
-      width: 400 * baseScale,
-      height: 500 * baseScale,
-      backgroundColor: 0x1a1a2e,
-      backgroundAlpha: 0.95,
-      borderColor: 0x4a90e2,
-      borderWidth: 3,
-      cornerRadius: 20,
-      padding: 30,
-    });
+    // Create decorative elements
+    this.createClouds(width, height);
+    this.createStars(width, height);
     
-    // Create UI elements
-    this.createTitle(baseScale);
-    this.createButtons(baseScale);
+    // Create title with Axie style
+    this.createAxieTitle(centerX, centerY - 150 * baseScale, baseScale);
     
-    // Add animations
+    // Create Axie-style buttons
+    this.createAxieButtons(centerX, centerY, baseScale);
+    
+    // Add entrance animations
     this.animateEntrance();
     
     // Add version text
     this.createVersionText(width, height, baseScale);
   }
   
-  private createBackground(width: number, height: number) {
-    // Layer 1: Base gradient background
+  private createAxieBackground(width: number, height: number) {
+    // Sky gradient (Axie-style)
     const gradient = this.add.graphics();
-    gradient.fillGradientStyle(0x0a0a1e, 0x0a0a1e, 0x1a1a3e, 0x1a1a3e, 1);
+    gradient.fillGradientStyle(
+      AxieGradients.sky[0],
+      AxieGradients.sky[0],
+      AxieGradients.sky[1],
+      AxieGradients.sky[1],
+      1
+    );
     gradient.fillRect(0, 0, width, height);
     
-    // Layer 2: Decorative circles
-    const circle1 = this.add.circle(width * 0.2, height * 0.3, 150, 0x4a90e2, 0.1);
-    const circle2 = this.add.circle(width * 0.8, height * 0.7, 200, 0x6aa8ff, 0.08);
+    // Add grass at bottom
+    const grassHeight = 150;
+    const grass = this.add.graphics();
+    grass.fillStyle(AxieColors.background.grass, 1);
+    grass.fillRect(0, height - grassHeight, width, grassHeight);
     
-    // Animate circles
+    // Add grass details
+    for (let i = 0; i < 20; i++) {
+      const x = (width / 20) * i;
+      const grassBlade = this.add.graphics();
+      grassBlade.fillStyle(0x7cb342, 1);
+      grassBlade.fillTriangle(
+        x, height - grassHeight,
+        x + 10, height - grassHeight - 30,
+        x + 20, height - grassHeight
+      );
+    }
+    
+    // Add sun
+    const sun = this.add.circle(width - 100, 100, 60, AxieColors.primary.yellow, 1);
+    sun.setStrokeStyle(5, AxieColors.primary.orange, 1);
+    
+    // Animate sun
     this.tweens.add({
-      targets: circle1,
-      scaleX: 1.2,
-      scaleY: 1.2,
-      alpha: 0.15,
-      duration: 3000,
-      yoyo: true,
-      repeat: -1,
-      ease: "Sine.easeInOut",
-    });
-    
-    this.tweens.add({
-      targets: circle2,
-      scaleX: 0.8,
-      scaleY: 0.8,
-      alpha: 0.12,
-      duration: 4000,
-      yoyo: true,
-      repeat: -1,
-      ease: "Sine.easeInOut",
-    });
-    
-    // Layer 3: Particle effect (optional)
-    this.createParticles(width, height);
-  }
-  
-  private createParticles(width: number, height: number) {
-    // Create simple particle effect
-    const graphics = this.add.graphics();
-    graphics.fillStyle(0xffffff, 1);
-    graphics.fillCircle(2, 2, 2);
-    graphics.generateTexture("particle", 4, 4);
-    graphics.destroy();
-    
-    // Create particle emitter
-    this.particles = this.add.particles(0, 0, "particle", {
-      x: { min: 0, max: width },
-      y: { min: -10, max: -5 },
-      lifespan: 8000,
-      speedY: { min: 20, max: 40 },
-      scale: { start: 0.3, end: 0 },
-      alpha: { start: 0.3, end: 0 },
-      frequency: 200,
-      blendMode: "ADD",
-    });
-  }
-  
-  private createTitle(scale: number) {
-    if (!this.mainPanel) return;
-    
-    const panelTop = this.mainPanel.y - this.mainPanel.panelHeight / 2;
-    
-    // Main title
-    const title = this.add.text(this.mainPanel.x, panelTop + 80 * scale, "Turn-Based\nCard Game", {
-      fontSize: `${48 * scale}px`,
-      color: "#ffffff",
-      fontFamily: "Arial",
-      fontStyle: "bold",
-      align: "center",
-    });
-    title.setOrigin(0.5);
-    title.setLineSpacing(10);
-    
-    // Add glow effect to title
-    title.setShadow(0, 0, "#4a90e2", 10, true, true);
-    
-    // Subtitle
-    const subtitle = this.add.text(
-      this.mainPanel.x,
-      panelTop + 180 * scale,
-      "Phaser 3 + Next.js",
-      {
-        fontSize: `${20 * scale}px`,
-        color: "#cccccc",
-        fontFamily: "Arial",
-        align: "center",
-      }
-    );
-    subtitle.setOrigin(0.5);
-    subtitle.setAlpha(0.7);
-    
-    // Pulse animation for title
-    this.tweens.add({
-      targets: title,
-      scale: 1.05,
+      targets: sun,
+      scaleX: 1.1,
+      scaleY: 1.1,
       duration: 2000,
       yoyo: true,
       repeat: -1,
@@ -147,65 +85,178 @@ export class MainMenuScene extends Phaser.Scene {
     });
   }
   
-  private createButtons(scale: number) {
-    if (!this.mainPanel) return;
+  private createClouds(width: number, height: number) {
+    // Create cute clouds
+    for (let i = 0; i < 5; i++) {
+      const cloud = this.add.graphics();
+      cloud.fillStyle(0xffffff, 0.8);
+      
+      // Draw cloud shape
+      cloud.fillCircle(0, 0, 30);
+      cloud.fillCircle(25, -5, 25);
+      cloud.fillCircle(50, 0, 30);
+      cloud.fillCircle(25, 10, 20);
+      
+      cloud.x = (width / 5) * i + 50;
+      cloud.y = 80 + Math.random() * 100;
+      
+      this.clouds.push(cloud);
+      
+      // Animate cloud floating
+      this.tweens.add({
+        targets: cloud,
+        x: cloud.x + 20,
+        duration: 3000 + Math.random() * 2000,
+        yoyo: true,
+        repeat: -1,
+        ease: "Sine.easeInOut",
+      });
+    }
+  }
+  
+  private createStars(width: number, height: number) {
+    // Create twinkling stars
+    for (let i = 0; i < 15; i++) {
+      const star = this.add.graphics();
+      star.fillStyle(AxieColors.primary.yellow, 1);
+      
+      // Draw star shape
+      const points = [];
+      for (let j = 0; j < 5; j++) {
+        const angle = (j * 4 * Math.PI) / 5 - Math.PI / 2;
+        const radius = j % 2 === 0 ? 8 : 4;
+        points.push(Math.cos(angle) * radius);
+        points.push(Math.sin(angle) * radius);
+      }
+      star.fillPoints(points as any, true);
+      
+      star.x = Math.random() * width;
+      star.y = Math.random() * height * 0.5;
+      star.setAlpha(0.6);
+      
+      this.stars.push(star);
+      
+      // Twinkle animation
+      this.tweens.add({
+        targets: star,
+        alpha: 1,
+        scaleX: 1.3,
+        scaleY: 1.3,
+        duration: 1000 + Math.random() * 1000,
+        yoyo: true,
+        repeat: -1,
+        ease: "Sine.easeInOut",
+      });
+    }
+  }
+  
+  private createAxieTitle(x: number, y: number, scale: number) {
+    // Main title with cute style
+    const title = this.add.text(x, y, "Turn-Based\nCard Battle", {
+      fontSize: `${AxieFonts.title.size * scale}px`,
+      color: "#ffffff",
+      fontFamily: AxieFonts.title.family,
+      fontStyle: AxieFonts.title.style,
+      align: "center",
+      stroke: "#2d1b69",
+      strokeThickness: 8,
+    });
+    title.setOrigin(0.5);
+    title.setLineSpacing(10);
     
-    const buttonY = this.mainPanel.y + 50 * scale;
-    const buttonSpacing = 80 * scale;
+    // Add rainbow glow
+    title.setShadow(0, 0, "#ff6ec7", 20, true, true);
     
-    // Start Game Button
-    const startButton = new GameButton(
+    // Subtitle with cute emoji
+    const subtitle = this.add.text(
+      x,
+      y + 100 * scale,
+      "⚔️ Collect • Battle • Win 🏆",
+      {
+        fontSize: `${AxieFonts.body.size * scale}px`,
+        color: "#2d1b69",
+        fontFamily: AxieFonts.body.family,
+        fontStyle: "bold",
+        align: "center",
+      }
+    );
+    subtitle.setOrigin(0.5);
+    
+    // Bounce animation for title
+    this.tweens.add({
+      targets: title,
+      y: y - 10,
+      duration: 2000,
+      yoyo: true,
+      repeat: -1,
+      ease: "Sine.easeInOut",
+    });
+  }
+  
+  private createAxieButtons(x: number, y: number, scale: number) {
+    const buttonSpacing = 90 * scale;
+    const startY = y + 50 * scale;
+    
+    // Play Button (Big and colorful)
+    const playButton = new AxieButton(
       this,
-      this.mainPanel.x,
-      buttonY,
-      "Start Game",
+      x,
+      startY,
+      "⚔️ Start Battle",
       () => this.onStartGame(),
       {
         width: 300 * scale,
-        height: 60 * scale,
-        normalColor: 0x4a90e2,
-        hoverColor: 0x6aa8ff,
-        pressedColor: 0x357abd,
-        fontSize: 24 * scale,
-        cornerRadius: 10,
+        height: 80 * scale,
+        color: "pink",
+        fontSize: 28 * scale,
       }
     );
-    this.buttons.push(startButton);
+    this.buttons.push(playButton);
     
     // Character Editor Button
-    const editorButton = new GameButton(
+    const editorButton = new AxieButton(
       this,
-      this.mainPanel.x,
-      buttonY + buttonSpacing,
-      "Character Editor",
+      x,
+      startY + buttonSpacing,
+      "👥 My Characters",
       () => this.onCharacterEditor(),
       {
         width: 300 * scale,
-        height: 60 * scale,
-        normalColor: 0x50c878,
-        hoverColor: 0x70e898,
-        pressedColor: 0x30a858,
+        height: 70 * scale,
+        color: "purple",
         fontSize: 24 * scale,
-        cornerRadius: 10,
       }
     );
     this.buttons.push(editorButton);
     
-    // Settings Button (placeholder)
-    const settingsButton = new GameButton(
+    // Collection Button
+    const collectionButton = new AxieButton(
       this,
-      this.mainPanel.x,
-      buttonY + buttonSpacing * 2,
-      "Settings",
+      x,
+      startY + buttonSpacing * 2,
+      "📚 Collection",
+      () => this.onCollection(),
+      {
+        width: 300 * scale,
+        height: 70 * scale,
+        color: "blue",
+        fontSize: 24 * scale,
+      }
+    );
+    this.buttons.push(collectionButton);
+    
+    // Settings Button
+    const settingsButton = new AxieButton(
+      this,
+      x,
+      startY + buttonSpacing * 3,
+      "⚙️ Settings",
       () => this.onSettings(),
       {
         width: 300 * scale,
-        height: 60 * scale,
-        normalColor: 0xe94560,
-        hoverColor: 0xff6580,
-        pressedColor: 0xc92540,
+        height: 70 * scale,
+        color: "green",
         fontSize: 24 * scale,
-        cornerRadius: 10,
       }
     );
     this.buttons.push(settingsButton);
@@ -215,34 +266,31 @@ export class MainMenuScene extends Phaser.Scene {
     const version = this.add.text(
       width - GAME_CONFIG.SAFE_ZONE.RIGHT - 10,
       height - GAME_CONFIG.SAFE_ZONE.BOTTOM - 10,
-      "v2.0.0",
+      "v2.1.0 Axie Style",
       {
         fontSize: `${14 * scale}px`,
-        color: "#666666",
+        color: "#2d1b69",
         fontFamily: "Arial",
+        fontStyle: "bold",
       }
     );
     version.setOrigin(1, 1);
   }
   
   private animateEntrance() {
-    // Fade in panel
-    if (this.mainPanel) {
-      this.mainPanel.fadeIn(300);
-    }
-    
-    // Fade in buttons with stagger
+    // Fade in buttons with bounce
     this.buttons.forEach((button, index) => {
       button.setAlpha(0);
-      button.setScale(0.8);
+      button.setScale(0);
       
       this.tweens.add({
         targets: button,
         alpha: 1,
-        scale: 1,
-        duration: 300,
-        delay: 100 + index * 100,
-        ease: "Back.easeOut",
+        scaleX: 1,
+        scaleY: 1,
+        duration: 500,
+        delay: 200 + index * 150,
+        ease: "Bounce.easeOut",
       });
     });
   }
@@ -250,52 +298,52 @@ export class MainMenuScene extends Phaser.Scene {
   private onStartGame() {
     console.log("Start Game clicked");
     
-    // Add click feedback
-    this.cameras.main.flash(100, 74 / 255, 144 / 255, 226 / 255);
+    // Sparkle effect
+    this.cameras.main.flash(200, 255, 215, 0);
     
-    // TODO: Navigate to battle scene when implemented
-    // this.scene.start(SceneKey.BATTLE);
+    // TODO: Navigate to battle scene
   }
   
   private onCharacterEditor() {
     console.log("Character Editor clicked");
     
-    // Add click feedback
-    this.cameras.main.flash(100, 80 / 255, 200 / 255, 120 / 255);
+    // Sparkle effect
+    this.cameras.main.flash(200, 151, 71, 255);
     
-    // Fade out and transition
+    // Transition
     this.fadeOutAndTransition(SceneKey.CHARACTER_EDITOR);
+  }
+  
+  private onCollection() {
+    console.log("Collection clicked");
+    
+    // Sparkle effect
+    this.cameras.main.flash(200, 0, 184, 206);
   }
   
   private onSettings() {
     console.log("Settings clicked");
     
-    // Add click feedback
-    this.cameras.main.flash(100, 233 / 255, 69 / 255, 96 / 255);
-    
-    // TODO: Open settings menu
+    // Sparkle effect
+    this.cameras.main.flash(200, 0, 212, 170);
   }
   
   private fadeOutAndTransition(targetScene: string) {
-    // Fade out panel
-    if (this.mainPanel) {
-      this.mainPanel.fadeOut(200);
-    }
-    
     // Fade out buttons
     this.buttons.forEach((button, index) => {
       this.tweens.add({
         targets: button,
         alpha: 0,
-        scale: 0.8,
-        duration: 200,
+        scaleX: 0,
+        scaleY: 0,
+        duration: 300,
         delay: index * 50,
-        ease: "Power2",
+        ease: "Back.easeIn",
       });
     });
     
-    // Fade out camera and transition
-    this.cameras.main.fadeOut(300);
+    // Fade out camera
+    this.cameras.main.fadeOut(400);
     this.cameras.main.once("camerafadeoutcomplete", () => {
       this.scene.start(targetScene);
     });
@@ -305,7 +353,9 @@ export class MainMenuScene extends Phaser.Scene {
     // Cleanup
     this.buttons.forEach(button => button.destroy());
     this.buttons = [];
-    this.mainPanel?.destroy();
-    this.particles?.destroy();
+    this.clouds.forEach(cloud => cloud.destroy());
+    this.clouds = [];
+    this.stars.forEach(star => star.destroy());
+    this.stars = [];
   }
 }
