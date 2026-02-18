@@ -31,6 +31,8 @@ export enum Element {
 export enum SceneKey {
   PRELOAD = "PreloadScene",
   MENU = "MenuScene",
+  MAIN_MENU = "MainMenuScene",
+  CHARACTER_EDITOR = "CharacterEditorScene",
   BATTLE = "BattleScene",
   UI = "UIScene",
   RESULT = "ResultScene",

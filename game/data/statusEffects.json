@@ -1,0 +1,135 @@
+[
+  {
+    "id": "poison",
+    "name": "Poison",
+    "type": "debuff",
+    "duration": 2,
+    "effects": [
+      {
+        "type": "damage_per_turn",
+        "value": 5,
+        "scale": "max_hp_percent"
+      }
+    ]
+  },
+  {
+    "id": "burn",
+    "name": "Burn",
+    "type": "debuff",
+    "duration": 2,
+    "effects": [
+      {
+        "type": "damage_per_turn",
+        "value": 8,
+        "scale": "max_hp_percent"
+      }
+    ]
+  },
+  {
+    "id": "slow",
+    "name": "Slow",
+    "type": "debuff",
+    "duration": 2,
+    "effects": [
+      {
+        "type": "stat_modifier",
+        "stat": "speed",
+        "value": -30,
+        "scale": "percent"
+      }
+    ]
+  },
+  {
+    "id": "stun",
+    "name": "Stun",
+    "type": "debuff",
+    "duration": 1,
+    "effects": [
+      {
+        "type": "disable_action",
+        "value": 1
+      }
+    ]
+  },
+  {
+    "id": "defense_up",
+    "name": "Defense Up",
+    "type": "buff",
+    "duration": 2,
+    "effects": [
+      {
+        "type": "stat_modifier",
+        "stat": "defense",
+        "value": 50,
+        "scale": "percent"
+      }
+    ]
+  },
+  {
+    "id": "attack_up",
+    "name": "Attack Up",
+    "type": "buff",
+    "duration": 2,
+    "effects": [
+      {
+        "type": "stat_modifier",
+        "stat": "attack",
+        "value": 50,
+        "scale": "percent"
+      }
+    ]
+  },
+  {
+    "id": "attack_down",
+    "name": "Attack Down",
+    "type": "debuff",
+    "duration": 2,
+    "effects": [
+      {
+        "type": "stat_modifier",
+        "stat": "attack",
+        "value": -30,
+        "scale": "percent"
+      }
+    ]
+  },
+  {
+    "id": "evasion_up",
+    "name": "Evasion Up",
+    "type": "buff",
+    "duration": 2,
+    "effects": [
+      {
+        "type": "evasion_chance",
+        "value": 50,
+        "scale": "percent"
+      }
+    ]
+  },
+  {
+    "id": "regeneration",
+    "name": "Regeneration",
+    "type": "buff",
+    "duration": 3,
+    "effects": [
+      {
+        "type": "heal_per_turn",
+        "value": 5,
+        "scale": "max_hp_percent"
+      }
+    ]
+  },
+  {
+    "id": "shield",
+    "name": "Shield",
+    "type": "buff",
+    "duration": 2,
+    "effects": [
+      {
+        "type": "damage_reduction",
+        "value": 30,
+        "scale": "percent"
+      }
+    ]
+  }
+]

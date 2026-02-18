@@ -1,0 +1,80 @@
+[
+  {
+    "id": "fire_knight",
+    "name": "Fire Knight",
+    "element": "fire",
+    "role": "tank",
+    "stats": {
+      "hp": 1200,
+      "attack": 80,
+      "defense": 100,
+      "speed": 60
+    },
+    "skills": ["passive_fire", "fire_slash", "guard", "inferno"]
+  },
+  {
+    "id": "water_mage",
+    "name": "Water Mage",
+    "element": "water",
+    "role": "support",
+    "stats": {
+      "hp": 800,
+      "attack": 120,
+      "defense": 50,
+      "speed": 90
+    },
+    "skills": ["passive_water", "water_blast", "heal_wave", "tsunami"]
+  },
+  {
+    "id": "earth_warrior",
+    "name": "Earth Warrior",
+    "element": "earth",
+    "role": "damage",
+    "stats": {
+      "hp": 1000,
+      "attack": 150,
+      "defense": 80,
+      "speed": 70
+    },
+    "skills": ["passive_earth", "earth_strike", "stone_skin", "earthquake"]
+  },
+  {
+    "id": "wind_assassin",
+    "name": "Wind Assassin",
+    "element": "wind",
+    "role": "damage",
+    "stats": {
+      "hp": 700,
+      "attack": 180,
+      "defense": 40,
+      "speed": 120
+    },
+    "skills": ["passive_wind", "wind_blade", "evasion", "cyclone"]
+  },
+  {
+    "id": "light_priest",
+    "name": "Light Priest",
+    "element": "neutral",
+    "role": "support",
+    "stats": {
+      "hp": 900,
+      "attack": 60,
+      "defense": 70,
+      "speed": 80
+    },
+    "skills": ["passive_light", "holy_light", "mass_heal", "resurrection"]
+  },
+  {
+    "id": "dark_necromancer",
+    "name": "Dark Necromancer",
+    "element": "neutral",
+    "role": "damage",
+    "stats": {
+      "hp": 850,
+      "attack": 140,
+      "defense": 60,
+      "speed": 75
+    },
+    "skills": ["passive_dark", "shadow_bolt", "life_drain", "death_curse"]
+  }
+]

@@ -4,7 +4,8 @@ import { useEffect, useRef } from "react";
 import Phaser from "phaser";
 import { getPhaserConfig } from "@/game/config/gameConfig";
 import { PreloadScene } from "@/game/scenes/PreloadScene";
-import { MenuScene } from "@/game/scenes/MenuScene";
+import { MainMenuScene } from "@/game/scenes/MainMenuScene";
+import { CharacterEditorScene } from "@/game/scenes/CharacterEditorScene";
 import { BattleScene } from "@/game/scenes/BattleScene";
 import { UIScene } from "@/game/scenes/UIScene";
 
@@ -19,7 +20,13 @@ export default function PhaserGame() {
     const config = getPhaserConfig(containerRef.current);
     
     // Add scenes
-    config.scene = [PreloadScene, MenuScene, BattleScene, UIScene];
+    config.scene = [
+      PreloadScene,
+      MainMenuScene,
+      CharacterEditorScene,
+      BattleScene,
+      UIScene,
+    ];
 
     // Create game instance
     gameRef.current = new Phaser.Game(config);

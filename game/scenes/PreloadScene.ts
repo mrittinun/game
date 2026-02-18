@@ -17,8 +17,8 @@ export class PreloadScene extends Phaser.Scene {
   }
   
   create() {
-    // เมื่อโหลดเสร็จ ไปที่ MenuScene
-    this.scene.start(SceneKey.MENU);
+    // เมื่อโหลดเสร็จ ไปที่ MainMenuScene
+    this.scene.start(SceneKey.MAIN_MENU);
   }
   
   private createLoadingScreen() {

@@ -1,0 +1,359 @@
+[
+  {
+    "id": "fire_slash",
+    "name": "Fire Slash",
+    "energyCost": 1,
+    "target": "enemy_front",
+    "effects": [
+      {
+        "type": "damage",
+        "value": 120,
+        "scale": "attack"
+      },
+      {
+        "type": "apply_status",
+        "status": "burn",
+        "chance": 0.5,
+        "duration": 2
+      }
+    ]
+  },
+  {
+    "id": "guard",
+    "name": "Guard",
+    "energyCost": 1,
+    "target": "self",
+    "effects": [
+      {
+        "type": "apply_status",
+        "status": "defense_up",
+        "chance": 1.0,
+        "duration": 2
+      }
+    ]
+  },
+  {
+    "id": "inferno",
+    "name": "Inferno",
+    "energyCost": 3,
+    "target": "enemy_all",
+    "effects": [
+      {
+        "type": "damage",
+        "value": 80,
+        "scale": "attack"
+      },
+      {
+        "type": "apply_status",
+        "status": "burn",
+        "chance": 0.8,
+        "duration": 3
+      }
+    ]
+  },
+  {
+    "id": "water_blast",
+    "name": "Water Blast",
+    "energyCost": 1,
+    "target": "enemy_front",
+    "effects": [
+      {
+        "type": "damage",
+        "value": 100,
+        "scale": "attack"
+      }
+    ]
+  },
+  {
+    "id": "heal_wave",
+    "name": "Heal Wave",
+    "energyCost": 2,
+    "target": "ally_all",
+    "effects": [
+      {
+        "type": "heal",
+        "value": 30,
+        "scale": "max_hp_percent"
+      }
+    ]
+  },
+  {
+    "id": "tsunami",
+    "name": "Tsunami",
+    "energyCost": 3,
+    "target": "enemy_all",
+    "effects": [
+      {
+        "type": "damage",
+        "value": 90,
+        "scale": "attack"
+      },
+      {
+        "type": "apply_status",
+        "status": "slow",
+        "chance": 0.7,
+        "duration": 2
+      }
+    ]
+  },
+  {
+    "id": "earth_strike",
+    "name": "Earth Strike",
+    "energyCost": 1,
+    "target": "enemy_front",
+    "effects": [
+      {
+        "type": "damage",
+        "value": 150,
+        "scale": "attack"
+      }
+    ]
+  },
+  {
+    "id": "stone_skin",
+    "name": "Stone Skin",
+    "energyCost": 1,
+    "target": "self",
+    "effects": [
+      {
+        "type": "apply_status",
+        "status": "defense_up",
+        "chance": 1.0,
+        "duration": 3
+      }
+    ]
+  },
+  {
+    "id": "earthquake",
+    "name": "Earthquake",
+    "energyCost": 3,
+    "target": "enemy_all",
+    "effects": [
+      {
+        "type": "damage",
+        "value": 100,
+        "scale": "attack"
+      },
+      {
+        "type": "apply_status",
+        "status": "stun",
+        "chance": 0.3,
+        "duration": 1
+      }
+    ]
+  },
+  {
+    "id": "wind_blade",
+    "name": "Wind Blade",
+    "energyCost": 1,
+    "target": "enemy_front",
+    "effects": [
+      {
+        "type": "damage",
+        "value": 140,
+        "scale": "attack"
+      }
+    ]
+  },
+  {
+    "id": "evasion",
+    "name": "Evasion",
+    "energyCost": 1,
+    "target": "self",
+    "effects": [
+      {
+        "type": "apply_status",
+        "status": "evasion_up",
+        "chance": 1.0,
+        "duration": 2
+      }
+    ]
+  },
+  {
+    "id": "cyclone",
+    "name": "Cyclone",
+    "energyCost": 3,
+    "target": "enemy_all",
+    "effects": [
+      {
+        "type": "damage",
+        "value": 110,
+        "scale": "attack"
+      }
+    ]
+  },
+  {
+    "id": "holy_light",
+    "name": "Holy Light",
+    "energyCost": 1,
+    "target": "ally_front",
+    "effects": [
+      {
+        "type": "heal",
+        "value": 50,
+        "scale": "max_hp_percent"
+      }
+    ]
+  },
+  {
+    "id": "mass_heal",
+    "name": "Mass Heal",
+    "energyCost": 2,
+    "target": "ally_all",
+    "effects": [
+      {
+        "type": "heal",
+        "value": 35,
+        "scale": "max_hp_percent"
+      }
+    ]
+  },
+  {
+    "id": "resurrection",
+    "name": "Resurrection",
+    "energyCost": 4,
+    "target": "ally_dead",
+    "effects": [
+      {
+        "type": "revive",
+        "value": 50,
+        "scale": "max_hp_percent"
+      }
+    ]
+  },
+  {
+    "id": "shadow_bolt",
+    "name": "Shadow Bolt",
+    "energyCost": 1,
+    "target": "enemy_front",
+    "effects": [
+      {
+        "type": "damage",
+        "value": 130,
+        "scale": "attack"
+      }
+    ]
+  },
+  {
+    "id": "life_drain",
+    "name": "Life Drain",
+    "energyCost": 2,
+    "target": "enemy_front",
+    "effects": [
+      {
+        "type": "damage",
+        "value": 100,
+        "scale": "attack"
+      },
+      {
+        "type": "heal_self",
+        "value": 50,
+        "scale": "damage_dealt"
+      }
+    ]
+  },
+  {
+    "id": "death_curse",
+    "name": "Death Curse",
+    "energyCost": 3,
+    "target": "enemy_all",
+    "effects": [
+      {
+        "type": "apply_status",
+        "status": "poison",
+        "chance": 0.9,
+        "duration": 3
+      },
+      {
+        "type": "apply_status",
+        "status": "attack_down",
+        "chance": 0.7,
+        "duration": 2
+      }
+    ]
+  },
+  {
+    "id": "passive_fire",
+    "name": "Fire Mastery",
+    "energyCost": 0,
+    "target": "self",
+    "effects": [
+      {
+        "type": "stat_boost",
+        "stat": "attack",
+        "value": 10,
+        "scale": "percent"
+      }
+    ]
+  },
+  {
+    "id": "passive_water",
+    "name": "Water Mastery",
+    "energyCost": 0,
+    "target": "self",
+    "effects": [
+      {
+        "type": "stat_boost",
+        "stat": "speed",
+        "value": 15,
+        "scale": "percent"
+      }
+    ]
+  },
+  {
+    "id": "passive_earth",
+    "name": "Earth Mastery",
+    "energyCost": 0,
+    "target": "self",
+    "effects": [
+      {
+        "type": "stat_boost",
+        "stat": "defense",
+        "value": 20,
+        "scale": "percent"
+      }
+    ]
+  },
+  {
+    "id": "passive_wind",
+    "name": "Wind Mastery",
+    "energyCost": 0,
+    "target": "self",
+    "effects": [
+      {
+        "type": "stat_boost",
+        "stat": "speed",
+        "value": 25,
+        "scale": "percent"
+      }
+    ]
+  },
+  {
+    "id": "passive_light",
+    "name": "Light Mastery",
+    "energyCost": 0,
+    "target": "self",
+    "effects": [
+      {
+        "type": "stat_boost",
+        "stat": "hp",
+        "value": 15,
+        "scale": "percent"
+      }
+    ]
+  },
+  {
+    "id": "passive_dark",
+    "name": "Dark Mastery",
+    "energyCost": 0,
+    "target": "self",
+    "effects": [
+      {
+        "type": "stat_boost",
+        "stat": "attack",
+        "value": 15,
+        "scale": "percent"
+      }
+    ]
+  }
+]
